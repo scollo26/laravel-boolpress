@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <a  class="btn btn-danger"  aria-current="page" href="{{ route('admin.posts.create') }}">Back</a>
+                <a  class="btn btn-danger"  aria-current="page" href="{{ route('admin.posts.index') }}">Back</a>
                 @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}

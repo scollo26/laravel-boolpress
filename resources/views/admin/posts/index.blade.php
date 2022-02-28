@@ -18,6 +18,7 @@
                     <h2>Author: {{$post->author}}</h2>
                     <h2>Content: {{$post->content}}</h2>
                     <h2>{{$post->slug}}</h2>
+                    <a class="btn btn-danger" href="{{ route('admin.posts.show', $post->id) }}">View</a>
                 </li>
                 
             @endforeach
