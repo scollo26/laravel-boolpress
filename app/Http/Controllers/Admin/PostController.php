@@ -5,9 +5,16 @@ use App\Model\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+
+    protected $ruleValidation =  [
+        'title' => 'required|max:255',
+        'author' => 'required|max:255',
+        'content' => 'required',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -37,13 +44,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+        // dd($data);
+        $data['user_id'] = Auth::user()->id;
+
         $validateData = $request->validate([
             'title' => 'required|max:255',
             'author' => 'required|max:255',
             'content' => 'required',
         ]);
 
-        $data = $request->all();
+        
 
         $slug = Str::slug($data['title'], '-');
         $postPresente = Post::where('slug', $slug)->first();
@@ -98,10 +109,18 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $validateData = $request->validate($this->ruleValidation);
+        $data = $request->all();
+        $updated = $post->update($data);
+        if(!$updated){
+            dd('update non riuscito');
+        }
+        return redirect()->route('admin.posts.show', $post)
+        ->with('status', "post $post->title Saved!");
     }
+    
 
     /**
      * Remove the specified resource from storage.

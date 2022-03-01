@@ -1,4 +1,8 @@
-@extends('layout.base')
+
+{{-- @dd($post); --}}
+
+
+@extends('layouts.app')
 
 
 
@@ -6,7 +10,7 @@
     <div class="container">
         <div class="row  justify-content-center">
             <div class="col-5 ">
-                <form action="{{ route('post.update', $post->id) }}" method="post">
+                <form action="{{ route('admin.posts.update', $post->slug) }}" method="post">
                     @csrf
                     @method('PATCH')
                         <div class="mb-3">
@@ -32,7 +36,7 @@
                         </div>
                         
                         <button type="submit" class="btn btn-danger" value="save">Save</button>
-                        <a  class="btn btn-danger"  aria-current="page" href="{{ route('comics.index') }}">Back</a>
+                        <a  class="btn btn-danger"  aria-current="page" href="{{ route('admin.posts.index') }}">Back</a>
                     </form>
 
             </div>

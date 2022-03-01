@@ -37,6 +37,7 @@
                             </div>
                         @enderror
                     </div>
+                    <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
 
                     <input class="btn btn-primary" type="submit" value="Salva">
                     <a  class="btn btn-danger"  aria-current="page" href="{{ route('admin.posts.index') }}">Back</a>
