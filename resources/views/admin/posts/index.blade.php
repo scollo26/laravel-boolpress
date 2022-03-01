@@ -31,7 +31,7 @@
     
 @endsection --}}
 
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
@@ -87,6 +87,11 @@
 
                 </tbody>
             </table>
+            <div class="row ">
+                <div class="col d-flex justify-content-center">
+                    {{ $posts->links() }}
+                </div>
+            </div>
         </div>
     </div>
 @endsection

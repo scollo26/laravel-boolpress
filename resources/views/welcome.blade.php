@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -97,4 +97,14 @@
             </div>
         </div>
     </body>
-</html>
+</html> --}}
+
+@extends('layouts.admin')
+
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Giovanni</h1>
+        </div>
+    </div>
+@endsection

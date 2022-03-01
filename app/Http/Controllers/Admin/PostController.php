@@ -87,7 +87,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        dd($post);
+        // dd($post);
+        return view ('admin.posts.edit', ['post'=>$post]);
     }
 
     /**
@@ -112,6 +113,7 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
+        return redirect()->route('admin.posts.index')
+        ->with('status', "Post id $post->id deleted");
     }
 }
