@@ -28,6 +28,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Created At</th>
                         <th scope="col">Updated At</th>
+                        <th scope="col">Category</th>
                         <th colspan="3" scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -36,19 +37,25 @@
                         <tr>
                             <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
+                            
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
+                            <td>{{ $post->category()->first()->name }}</td>
                             <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a>
                             </td>
-                            <td><a class="btn btn-info" href="{{ route('admin.posts.edit', $post->slug) }}">Modify</a>
+                            <td>
+                                @if (Auth::user()->id === $post->user_id)
+                                    <a class="btn btn-info" href="{{ route('admin.posts.edit', $post->slug) }}">Modify</a>
+                                @endif
                             </td>
                             <td>
-                                <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input class="btn btn-danger" type="submit" value="Delete">
-                                </form>
-
+                                @if (Auth::user()->id === $post->user_id)
+                                    <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input class="btn btn-danger" type="submit" value="Delete">
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

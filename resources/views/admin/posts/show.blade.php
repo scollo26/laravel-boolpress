@@ -19,6 +19,7 @@
             <div class="col">
                 <h2>Autore: {{ $post->author }}</h2>
                 <div><h2>Text: {{  $post->content }} </h2>
+                    <h2>Category: {{ $post->category()->first()->name }} </h2>
                     <div>{{ $post->slug }}</div>
                 </div>
             </div>

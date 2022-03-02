@@ -15,6 +15,7 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'author' => 'required|max:255',
         'content' => 'required',
+        'category_id' => 'exists:App\Model\Category,id'
     ];
     /**
      * Display a listing of the resource.
@@ -28,13 +29,28 @@ class PostController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexUser()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('admin.posts.index', ['posts' => $posts]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('admin.posts.create');
+
+        //passiamo le categorie alla pagina create
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -53,19 +69,14 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'author' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'exists:App\Model\Category,id'
         ]);
 
         
 
         $slug = Str::slug($data['title'], '-');
-        $postPresente = Post::where('slug', $slug)->first();
 
-        $counter = 0;
-        while ($postPresente) {
-            $slug = $slug . '-' . $counter;
-            $postPresente = Post::where('slug', $slug)->first();
-            $counter++;
-        }
+        
 
         $newPost = new Post();
 
@@ -100,7 +111,12 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         // dd($post);
-        return view ('admin.posts.edit', ['post'=>$post]);
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+        $categories = Category::all();
+
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -115,8 +131,24 @@ class PostController extends Controller
         $validateData = $request->validate($this->ruleValidation);
         $data = $request->all();
         $updated = $post->update($data);
+
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+
         if(!$updated){
             dd('update non riuscito');
+        }
+
+        if ($data['title'] != $post->title) {
+            $post->title = $data['title'];
+            $post->slug = $post->createSlug($data['title']);
+        }
+        if ($data['content'] != $post->content) {
+            $post->content = $data['content'];
+        }
+        if ($data['category_id'] != $post->category_id) {
+            $post->category_id = $data['category_id'];
         }
         return redirect()->route('admin.posts.show', $post)
         ->with('status', "post $post->title Saved!");

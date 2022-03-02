@@ -9,6 +9,26 @@
                     @method('POST')
 
                     <div class="mb-3">
+                        <select class="form-select" name="category_id">
+                            {{-- se la categoria scelta dall'utente precedentemente e' 
+                            identica a quella su cui sto girando inserisco
+                            l'attributo selected --}}
+                            <option value="">Select a category</option>
+                            @foreach ($categories as $category)
+                                {{-- <option {{ old('category_id') == $category->id ? 'selected' : '' }}
+                                    value="{{ $category->id }}"> --}}
+                                <option @if (old('category_id') == $category->id) selected @endif value="{{ $category->id }}">
+                                    {{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <div class="alert alert-danger mt-3">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
                         @error('title')
@@ -18,8 +38,9 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="author" class="form-label">author</label>
-                        <input type="text" class="form-control" id="author" name="author" value="{{ old('author') }}">
+                        <h3>Author: {{Auth::user()->name }}</h3>
+                        {{-- <label for="author" class="form-label">author</label>
+                        <input type="text" class="form-control" id="author" name="author" value="{{ old('author') }}"> --}}
                         @error('author')
                             <div class="alert alert-danger">
                                 {{ $message }}

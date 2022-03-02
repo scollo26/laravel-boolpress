@@ -37,15 +37,27 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('admin.posts.index')}}">
+                                    <a class="nav-link" href="{{route('admin.posts.create')}}">
                                         <i class="bi bi-files"></i>
-                                        Posts
+                                        Add Posts
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">
+                                    <a class="nav-link" href="{{ route('admin.categories.index') }}">
                                         <i class="bi bi-folder"></i>
                                         Categories
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.posts.index') }}">
+                                        <i class="bi bi-files"></i>
+                                        All Posts
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.posts.indexUser') }}">
+                                        <i class="bi bi-files"></i>
+                                        My Posts
                                     </a>
                                 </li>
                             </ul>
