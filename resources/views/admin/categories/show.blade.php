@@ -42,6 +42,12 @@
                 </tbody>
 
             </table>
+            <div class="row">
+                <div class="col">
+                    <a  class="btn btn-danger"  aria-current="page" href="{{ url()->previous() }}">Back</a>
+                </div>
+
+            </div>
         </div>
     </div>
 @endsection

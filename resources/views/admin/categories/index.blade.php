@@ -35,18 +35,31 @@
                             <td>{{ $category->created_at }}</td>
                             <td>{{ $category->updated_at }}</td>
                             <td><a class="btn btn-primary"
-                                    href="{{ route('admin.categories.show', $category->slug) }}">View</a>
+                                href="{{ route('admin.categories.show', $category->slug) }}">View</a> 
                             </td>
-                        </tr>
+                            <td><form class="mt-1" action="{{ route('admin.categories.destroy', $category->slug) }}"
+                                method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input class="btn btn-danger" type="submit" value="Delete"></td>
+                        
                     @endforeach
-
                 </tbody>
                 <tfoot>
+                    
                     <tr>
                         <td colspan="5">{{ $categories->links() }}</td>
+
                     </tr>
                 </tfoot>
             </table>
+            <div class="row">
+                <div class="col">
+                    <a  class="btn btn-danger"  aria-current="page" href="{{ route('admin.posts.index') }}">Back</a>
+                </div>
+
+            </div>
+            
         </div>
     </div>
 @endsection

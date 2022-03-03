@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Model\Category;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Model\Post;
 
 class CategoryController extends Controller
 {
@@ -27,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -38,8 +41,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
+    
 
     /**
      * Display the specified resource.
@@ -60,7 +64,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -70,10 +74,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -81,8 +86,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        
+        $posts = Post::whereNull('category_id')->get();
+
+        foreach ($posts as $post) {
+            $randomCategories = Category::inRandomOrder()->first()->id;
+            $post->category_id = $randomCategories;
+            $post->update();
+        }
+
+        return redirect()
+            ->route('admin.categories.index')
+            ->with('status', "The category '$category->name' was deleted!");
     }
 }
