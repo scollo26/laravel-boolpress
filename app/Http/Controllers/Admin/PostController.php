@@ -64,10 +64,11 @@ class PostController extends Controller
         $data = $request->all();
         // dd($data);
         $data['user_id'] = Auth::user()->id;
+        $data['author'] = Auth::user()->name;
 
         $validateData = $request->validate([
             'title' => 'required|max:255',
-            'author' => 'required|max:255',
+            // 'author' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'exists:App\Model\Category,id'
         ]);

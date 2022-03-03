@@ -38,14 +38,15 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <h3>Author: {{Auth::user()->name }}</h3>
-                        {{-- <label for="author" class="form-label">author</label>
-                        <input type="text" class="form-control" id="author" name="author" value="{{ old('author') }}"> --}}
-                        @error('author')
+                        
+                        <label for="author" class="form-label">Author</label>
+                        <h3> {{Auth::user()->name }}</h3>
+                        {{-- <input type="text" class="form-control" id="author" name="author" value="{{Auth::user()->name }}"> --}}
+                        {{-- @error('author')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
-                        @enderror
+                        @enderror --}}
                     </div>
 
                     <div class="mb-3">
