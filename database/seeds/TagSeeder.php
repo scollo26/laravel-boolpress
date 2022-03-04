@@ -14,11 +14,11 @@ class TagSeeder extends Seeder
     public function run()
     {
         $tags = [
-            'follows',
-            'like',
-            'travelblogger',
-            'photooftheday',
-            'instagood',
+            '#follows',
+            '#like',
+            '#travelblogger',
+            '#photooftheday',
+            '#instagood',
 
         ];
 

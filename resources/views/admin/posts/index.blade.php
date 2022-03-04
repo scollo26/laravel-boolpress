@@ -12,12 +12,13 @@
             @endif
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col text-center">
                 <a href="{{ route('admin.posts.create') }}" class="btn btn-danger">Add new Comic</a>
-                <h1>
-                    Posts
-                </h1>
+                
             </div>
+            <h1>
+                Posts
+            </h1>
         </div>
         <div class="row">
             
@@ -29,6 +30,7 @@
                         <th scope="col">Created At</th>
                         <th scope="col">Updated At</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Tags</th>
                         <th colspan="3" scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -37,10 +39,14 @@
                         <tr>
                             <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
-                            
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
                             <td>{{ $post->category()->first()->name }}</td>
+                            <td>
+                                @foreach ($post->tags()->get() as $tag)
+                                    {{ $tag->name }}
+                                @endforeach
+                            </td>
                             <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a>
                             </td>
                             <td>

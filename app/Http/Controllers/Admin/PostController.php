@@ -14,7 +14,7 @@ class PostController extends Controller
 
     protected $ruleValidation =  [
         'title' => 'required|max:255',
-        'author' => 'required|max:255',
+        // 'author' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'exists:App\Model\Category,id'
     ];
@@ -52,7 +52,7 @@ class PostController extends Controller
         //passiamo le categorie alla pagina create
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.posts.create', compact('categories', 'tags'));
+        return view('admin.posts.create',  [ 'categories' => $categories, 'tags' => $tags]);
     }
 
     /**
@@ -125,8 +125,7 @@ class PostController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
 
-        // return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags' => $tags]);
-        return view('admin.posts.edit', compact('categories', 'tags', 'post'));
+        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags' => $tags]);
 
         
     }
@@ -165,7 +164,7 @@ class PostController extends Controller
 
 
         $post->update();
-        
+
         if (!empty($data['tags'])) {
             $post->tags()->sync($data['tags']);
         } else {
@@ -185,6 +184,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        
+        $post->tags()->detach();
         $post->delete();
 
         return redirect()->route('admin.posts.index')
