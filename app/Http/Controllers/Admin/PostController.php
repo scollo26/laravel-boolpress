@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Category;
+use App\Model\Tag;
 
 class PostController extends Controller
 {
@@ -50,7 +51,8 @@ class PostController extends Controller
 
         //passiamo le categorie alla pagina create
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -70,7 +72,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             // 'author' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'exists:App\Model\Category,id'
+            'category_id' => 'exists:App\Model\Category,id',
+            'tags.*' => 'nullable|exists:App\Model\Tag,id'
         ]);
 
         
@@ -84,6 +87,10 @@ class PostController extends Controller
         $newPost->fill($data);
         $newPost->slug = $slug;
         $newPost->save();
+
+        if (!empty($data['tags'])) {
+            $newPost->tags()->attach($data['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $newPost->slug);
     }
@@ -116,8 +123,12 @@ class PostController extends Controller
             abort('403');
         }
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
+        // return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags' => $tags]);
+        return view('admin.posts.edit', compact('categories', 'tags', 'post'));
+
+        
     }
 
     /**
@@ -151,6 +162,16 @@ class PostController extends Controller
         if ($data['category_id'] != $post->category_id) {
             $post->category_id = $data['category_id'];
         }
+
+
+        $post->update();
+        
+        if (!empty($data['tags'])) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->detach();
+        }
+
         return redirect()->route('admin.posts.show', $post)
         ->with('status', "post $post->title Saved!");
     }
