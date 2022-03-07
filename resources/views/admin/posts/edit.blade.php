@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row  justify-content-center">
             <div class="col-5 ">
-                <form action="{{ route('admin.posts.update', $post->slug) }}" method="post">
+                <form action="{{ route('admin.posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="mb-3">
@@ -89,6 +89,25 @@
                             <textarea class="form-control" id="content" name="content" rows="3" >{{$post->content}}</textarea>
                             @error('content')
                                 <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- image upload --}}
+                        @if(!empty($post->image))
+                            <div class="mb-3">
+                                <img  class="img-fluid" src="{{ asset('storage/' . $post->image) }}"
+                                alt="{{ $post->title }}">
+
+                            </div>
+                            
+                        @endif
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input class="form-control" type="file" id="image" name="image">
+                            @error('image')
+                                <div class="alert alert-danger mt-3">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
                         

@@ -82,7 +82,7 @@ class PostController extends Controller
 
 
         // variabili upload per img
-        if(!empty($data['image'])){
+        if (!empty($data['image'])) {
             $img_path = Storage::put('uploads', $data['image']);
             $data['image'] = $img_path;
         }
@@ -157,6 +157,14 @@ class PostController extends Controller
             dd('update non riuscito');
         }
 
+        // variabili upload per img
+        if (!empty($data['image'])) {
+            Storage::delete($post->image);
+            $img_path = Storage::put('uploads', $data['image']);
+            $post->image = $img_path;
+        }
+
+
         if ($data['title'] != $post->title) {
             $post->title = $data['title'];
             $post->slug = $post->createSlug($data['title']);
@@ -167,7 +175,7 @@ class PostController extends Controller
         if ($data['category_id'] != $post->category_id) {
             $post->category_id = $data['category_id'];
         }
-
+        
 
         $post->update();
 
