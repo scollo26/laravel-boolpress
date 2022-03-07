@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Category;
 use App\Model\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -16,7 +17,9 @@ class PostController extends Controller
         'title' => 'required|max:255',
         // 'author' => 'required|max:255',
         'content' => 'required',
+        'image'=> 'nullable|image',
         'category_id' => 'exists:App\Model\Category,id'
+
     ];
     /**
      * Display a listing of the resource.
@@ -72,27 +75,30 @@ class PostController extends Controller
             'title' => 'required|max:255',
             // 'author' => 'required|max:255',
             'content' => 'required',
+            'image'=> 'nullable|image',
             'category_id' => 'exists:App\Model\Category,id',
             'tags.*' => 'nullable|exists:App\Model\Tag,id'
         ]);
 
-        
 
-        $slug = Str::slug($data['title'], '-');
-
-        
+        // variabili upload per img
+        if(!empty($data['image'])){
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
+        }
 
         $newPost = new Post();
 
         $newPost->fill($data);
-        $newPost->slug = $slug;
+        $newPost->slug = $newPost->createSlug($data['title']);
         $newPost->save();
 
         if (!empty($data['tags'])) {
             $newPost->tags()->attach($data['tags']);
         }
 
-        return redirect()->route('admin.posts.show', $newPost->slug);
+        
+        return redirect()->route('admin.posts.show', $newPost);
     }
 
     /**
