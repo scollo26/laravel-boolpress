@@ -71,7 +71,7 @@
             </table>
             <div class="row ">
                 <div class="col d-flex justify-content-center">
-                    {{ $posts->links() }}
+                    {{-- {{ $posts->links() }} --}}
                 </div>
             </div>
         </div>

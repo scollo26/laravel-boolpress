@@ -12,7 +12,8 @@
     <title>{{ config('app.name', 'Boolpress') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    @yield('script')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,11 +21,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 </head>
 
 <body>
+    @include('partials.header')
     <div id="app">
-        @include('partials.header')
+        
 
         <main class="py-4">
             @yield('content')
