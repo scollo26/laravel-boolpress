@@ -1,7 +1,11 @@
 <template>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col" v-for="(product, index) in products" :key="index">
+            <div
+                class="col"
+                v-for="(product, index) in cards.products"
+                :key="index"
+            >
                 <div class="card">
                     <img
                         v-if="product.image"
@@ -15,6 +19,11 @@
                         <h5 class="card-title">{{ product.author }}</h5>
                         <p class="card-text">{{ product.content }}</p>
                     </div>
+                    <router-link
+                        class="btn btn-info"
+                        :to="{ name: 'product', params: { id: product.id } }"
+                        >View</router-link
+                    >
                 </div>
             </div>
         </div>

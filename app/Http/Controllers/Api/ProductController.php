@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::paginate(8);
 
         return response()->json([
             'response' => true,
@@ -52,9 +52,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $post = Post::find($id);
 
+        return response()->json([
+            'response' => true,
+            'count' => $post ? 1 : 0,
+            'results' =>  [
+                'data' => $post
+            ],
+        ]);
+    }
     /**
      * Show the form for editing the specified resource.
      *

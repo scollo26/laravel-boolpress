@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand1" href="#">
                 <img id="logo" class="w-25" :src="logo" alt="logo" />
             </a>
             <button
@@ -42,7 +42,7 @@ export default {
     name: "Header",
     data() {
         return {
-            logo: require("../../img/bag-shopping-solid.svg"),
+            logo: require("../../img/WordPress-Logo.png"),
             menuItems: [
                 {
                     label: "Home",
@@ -66,4 +66,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.navbar-brand1 {
+    width: 50%;
+}
+</style>
