@@ -1,68 +1,69 @@
 <template>
-   <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-      <div class="container">
-          <a class="navbar-brand" href="#">
-              <img id="logo" class="w-25" :src="logo" alt="logo">
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse"
-                  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                  aria-expanded="false">
-              <span class="navbar-toggler-icon"></span>
-          </button>
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img id="logo" class="w-25" :src="logo" alt="logo" />
+            </a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-             <ul class="navbar-nav mr-auto">
-               <li class="nav-item"  
-                v-for="(item) in menuItems"
-                :key="item.id"
-                >
-                    <a class="nav-link" :href="item.link">{{ item.label }}</a>
-               </li>
-             </ul>
-          </div>
-      </div>
-  </nav>
-
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li
+                        class="nav-item"
+                        v-for="item in menuItems"
+                        :key="item.id"
+                    >
+                        <router-link
+                            class="nav-link"
+                            :to="{ name: item.routeName }"
+                            >{{ item.label }}</router-link
+                        >
+                        <!-- <a class="nav-link" :href="item.link">{{
+                            item.label
+                        }}</a> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </template>
 
 <script>
-  export default {
+export default {
     name: "Header",
     data() {
-      return {
-      logo: require('../../img/bag-shopping-solid.svg'),
-      menuItems: [
-                    {
-                        label: 'Item 1',
-                        link: '#',
-                        id: 1,
-                    },
-                    {
-                        label: 'Item 2',
-                        link: '#',
-                         id: 2,
-                    },
-                    {
-                        label: 'Item 3',
-                        link: '#',
-                        id: 3
-                    },
-                    {
-                        label: 'Item 4',
-                        link: '#',
-                        id: 4,
-                    },
-                    {
-                        label: 'Item 5',
-                        link: '#',
-                        id: 5,
-                    }
-                ],
-      }
+        return {
+            logo: require("../../img/bag-shopping-solid.svg"),
+            menuItems: [
+                {
+                    label: "Home",
+                    routeName: "home",
+                },
+                {
+                    label: "Post",
+                    routeName: "products",
+                },
+                {
+                    label: "Chi Siamo",
+                    routeName: "about",
+                },
+                {
+                    label: "Contatti",
+                    routeName: "contacts",
+                },
+            ],
+        };
     },
-  }
+};
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

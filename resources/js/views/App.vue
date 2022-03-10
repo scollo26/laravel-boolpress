@@ -1,23 +1,22 @@
 <template>
-  <div>
-    <Header></Header>
-    <Main></Main>
-  </div>
+    <div>
+        <Header></Header>
+        <router-view></router-view>
+        <!-- <Main></Main> -->
+    </div>
 </template>
 
 <script>
-import Main from '../components/Main.vue';
-import Header from '../components/Header.vue';
+// import Main from "../components/Main.vue";
+import Header from "../components/Header.vue";
 
-  export default {
+export default {
     name: "App",
     components: {
-        Main,
-        Header
-    }
-  }
+        // Main,
+        Header,
+    },
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss"></style>
