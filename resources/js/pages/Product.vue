@@ -48,12 +48,24 @@ export default {
         const url = "http://127.0.0.1:8000/api/v1/posts/" + this.id;
         this.getProduct(url);
     },
+    // methods: {
+    //     getProduct(url) {
+    //         Axios.get(url).then((result) => {
+    //             // console.log(result);
+    //             this.product = result.data.results.data;
+    //         });
+    //     },
+    // },
     methods: {
         getProduct(url) {
-            Axios.get(url).then((result) => {
-                // console.log(result);
-                this.product = result.data.results.data;
-            });
+            Axios.get(url, {
+                headers: { Authorization: "Bearer 123abczxgsdciuoyl2376342" },
+            })
+                .then((result) => {
+                    console.log(result);
+                    this.product = result.data.results.data;
+                })
+                .catch((error) => console.log(error));
         },
     },
 };
